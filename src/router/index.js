@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Products from '../views/Products.vue'
+import Repos from '../views/Repos.vue'
 
 Vue.use(VueRouter)
 
@@ -12,10 +12,16 @@ const routes = [
     component: Home
   },
   {
-    path: '/products/:id',
-    name: 'products',
+    path: '/repos',
+    name: 'repos',
     props: true,
-    component: Products
+    component: Repos
+  },
+  {
+    path: '/repos/:user',
+    name: 'repos',
+    props: true,
+    component: Repos
   },
   {
     path: '/about',
