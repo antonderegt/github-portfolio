@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Repos from '../views/Repos.vue'
+import User from '../views/User.vue'
 
 Vue.use(VueRouter)
 
@@ -24,12 +25,16 @@ const routes = [
     component: Repos
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/user/:githubuser',
+    name: 'user',
+    props: true,
+    component: User
+  },
+  {
+    path: '/user',
+    name: 'user',
+    props: true,
+    component: User
   }
 ]
 
