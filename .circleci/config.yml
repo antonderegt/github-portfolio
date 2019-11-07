@@ -17,4 +17,4 @@ jobs:
           name: run-tests
           command: npm run test:unit
       - store_test_results:
-          path: ~/test-results/unit/
+          path: ~/test-results
