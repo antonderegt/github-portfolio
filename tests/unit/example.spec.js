@@ -1,6 +1,8 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import VueRouter from 'vue-router'
 import HelloWorld from '@/components/HelloWorld.vue'
 import Repos from '@/views/Repos.vue'
+import { wrap } from 'module'
 
 describe('HelloWorld.vue', () => {
   it('renders props.msg when passed', () => {
@@ -25,5 +27,35 @@ describe('Repos.vue', () => {
     const defaultData = Repos.data()
     expect(defaultData.username).toBe('')
     expect(defaultData.repos).toBe(null)
+  })
+
+  it('receives props', () => {
+    const user = 'username'
+    const localVue = createLocalVue()
+    localVue.use(VueRouter)
+    const wrapper = shallowMount(Repos, {
+      propsData: {user},
+      localVue
+    })
+    expect(wrapper.props('user')).toBe('username')
+    expect(wrapper.find('#repos').exists()).toBeTruthy()
+  })
+
+  it('load router links', () => {
+    const localVue = createLocalVue()
+    localVue.use(VueRouter)
+
+    const $route = {
+      path: '/repos/antonderegt'
+    }
+    
+    const wrapper = shallowMount(Repos, {
+      mocks: {
+        $route
+      },
+      //localVue
+    })
+    
+    expect(wrapper.vm.$route.path).toBe('/repos/antonderegt') 
   })
 })
