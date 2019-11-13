@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-col items-center">
       <div class="w-full max-w-xs">
-        <form class="w-full max-w-sm">
+        <form class="w-full max-w-sm" @submit="getData" @submit.prevent>
           <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
             <input v-model="username" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Username" aria-label="Username">
             <router-link :to="/repos/+username">
@@ -11,13 +11,13 @@
           </div>
         </form>
       </div>
-      <div v-if="user != null" class="flex flex-col" id="repos">
+      <div v-if="repos && repos.length" class="flex flex-col" id="repos">
         <div v-for="repo in repos" :key="repo.node_id" class="flex m-5 p-5 rounded shadow-lg">
           <div class="flex-2">
             <img class="h-20 rounded-full m-5" :src="repo.owner.avatar_url" >
           </div>
           <div class="flex-1">
-            <p>{{user}}</p>
+            <p>{{username}}</p>
             <a :href="repo.html_url" class="font-bold text-xl mb-2 text-blue-500" target="_blank">{{ repo.full_name }}</a>
             <p>{{repo.description}}</p>
             <div class="px-6 py-4">
@@ -38,8 +38,8 @@ export default {
   props: ['user'],
   data: function() {
     return {
-      username: '',
-      repos: null
+      repos: null,
+      username: this.user
     }
   },
   watch: {
@@ -48,16 +48,13 @@ export default {
     }
   },
   methods: {
-    getData() {
-      var that = this
-      axios.get('https://api.github.com/users/'+this.user+'/repos', {
-             headers: {
-               Accept: 'application/vnd.github.v3+json'
-             }
-           })
-           .then(function (response) {
-             that.repos = response.data
-           })
+    async getData() {
+      if(!this.username){
+        return;
+      }
+
+      let res = await axios.get(`https://api.github.com/users/${this.username}/repos`);
+      this.repos = res.data;
     }
   },
   mounted: function() {

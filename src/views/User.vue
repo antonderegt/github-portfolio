@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-col items-center">
       <div class="w-full max-w-xs">
-        <form class="w-full max-w-sm">
+        <form class="w-full max-w-sm" @submit="getData" @submit.prevent>
           <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
             <input v-model="username" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Username" aria-label="Username">
             <router-link :to="/user/+username">
@@ -11,7 +11,7 @@
           </div>
         </form>
       </div>
-    <div v-if="githubuser != null" class="flex flex-col">
+    <div v-if="user" class="flex flex-col">
       <div class="flex m-5 p-5 rounded shadow-lg">
         <div class="flex-2">
           <img class="h-20 rounded-full m-5" :src="user.avatar_url" >
@@ -37,26 +37,27 @@ export default {
   props: ['githubuser'],
   data: function() {
     return {
-      username: '',
-      user: null
+      username: this.githubuser,
+      user: null,
     }
   },
   watch: {
     '$route' () {
       this.getData()
+    },
+    username () {
+      // this.getData(); // Uncomment to enable hot searching (rate limit unauthenticated API 5000 calls / hour)
     }
+
   },
   methods: {
-    getData() {
-      var that = this
-      axios.get('https://api.github.com/users/'+this.githubuser, {
-             headers: {
-               Accept: 'application/vnd.github.v3+json'
-             }
-           })
-           .then(function (response) {
-             that.user = response.data
-           })
+    async getData() {
+      if(!this.username){
+        return;
+      }
+
+      let res = await axios.get(`https://api.github.com/users/${this.username}`);
+      this.user = res.data;
     }
   },
   mounted: function() {
