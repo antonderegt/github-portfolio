@@ -17,20 +17,8 @@ describe('Repos.vue', () => {
   it('sets the correct default data', () => {
     expect(typeof Repos.data).toBe('function')
     const defaultData = Repos.data()
-    expect(defaultData.username).toBe('')
+    expect(defaultData.username).toBe(undefined)
     expect(defaultData.repos).toBe(null)
-  })
-
-  it('receives props', () => {
-    const user = 'username'
-    const localVue = createLocalVue()
-    localVue.use(VueRouter)
-    const wrapper = shallowMount(Repos, {
-      propsData: {user},
-      localVue
-    })
-    expect(wrapper.props('user')).toBe('username')
-    expect(wrapper.find('#repos').exists()).toBeTruthy()
   })
 
   it('load router links', () => {
@@ -49,17 +37,5 @@ describe('Repos.vue', () => {
     })
     
     expect(wrapper.vm.$route.path).toBe('/repos/antonderegt') 
-  })
-
-  it('fetches async when a button is clicked', done => {
-    const user = 'antonderegt'
-    const wrapper = shallowMount(Repos, {
-      propsData: {username: "antonderegt"}
-    })
-    wrapper.find('button').trigger('click')
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.repos).toBe(user)
-      done()
-    })
   })
 })
