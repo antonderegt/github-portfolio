@@ -1,23 +1,15 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router'
-import HelloWorld from '@/components/HelloWorld.vue'
 import Repos from '@/views/Repos.vue'
-import { wrap } from 'module'
-
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
-  })
-})
 
 describe('Repos.vue', () => {
   // Inspect the raw component options
   it('has created function selectTab', () => {
     expect(typeof Repos.methods.getData).toBe('function')
+  })
+
+  it('has created mount', () => {
+    expect(typeof Repos.mounted).toBe('function')
   })
 
   // Evaluate the results of functions in
@@ -43,7 +35,7 @@ describe('Repos.vue', () => {
 
   it('load router links', () => {
     const localVue = createLocalVue()
-    localVue.use(VueRouter)
+   // localVue.use(VueRouter)
 
     const $route = {
       path: '/repos/antonderegt'
@@ -53,9 +45,21 @@ describe('Repos.vue', () => {
       mocks: {
         $route
       },
-      //localVue
+      localVue
     })
     
     expect(wrapper.vm.$route.path).toBe('/repos/antonderegt') 
+  })
+
+  it('fetches async when a button is clicked', done => {
+    const user = 'antonderegt'
+    const wrapper = shallowMount(Repos, {
+      propsData: {username: "antonderegt"}
+    })
+    wrapper.find('button').trigger('click')
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.vm.repos).toBe(user)
+      done()
+    })
   })
 })
