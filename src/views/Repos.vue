@@ -17,7 +17,6 @@
             <img class="h-20 rounded-full m-5" :src="repo.owner.avatar_url" >
           </div>
           <div class="flex-1">
-            <p>{{username}}</p>
             <a :href="repo.html_url" class="font-bold text-xl mb-2 text-blue-500" target="_blank">{{ repo.full_name }}</a>
             <p>{{repo.description}}</p>
             <div class="px-6 py-4">
