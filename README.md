@@ -89,6 +89,20 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 <!-- Add run commands and examples you think users will find useful. Provide an options reference for bonus points! -->
 
+## Testing
+To run the [Jest](https://jestjs.io) unit tests run the following command in your terminal
+```
+npm run test:unit
+```
+To run the [Cypress](https://www.cypress.io) e2e tests install Cypress
+```
+npm install -d cypress
+```
+and run it like this
+```
+npx cypress open
+```
+
 ## Contributing to Github Portfolio
 <!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
 To contribute to Github Portfolio follow these steps:
