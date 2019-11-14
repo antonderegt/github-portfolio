@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img class="mx-auto" alt="Vue logo" src="../assets/logo.png">
+    <img data-cy="logo" class="mx-auto" alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome Stalker"/>
   </div>
 </template>

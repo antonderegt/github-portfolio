@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>Go to the User or Repos tab and enter a username!</p>
+    <h1 data-cy="title">{{ msg }}</h1>
+    <p data-cy="undertitle">Go to the User or Repos tab and enter a username!</p>
   </div>
 </template>
 

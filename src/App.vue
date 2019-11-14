@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/user">User</router-link> | 
-      <router-link to="/repos">Repos</router-link>
+      <router-link data-cy="router-link-home" to="/">Home</router-link> |
+      <router-link data-cy="router-link-user" to="/user">User</router-link> | 
+      <router-link data-cy="router-link-repos" to="/repos">Repos</router-link>
     </div>
     <router-view/>
   </div>
